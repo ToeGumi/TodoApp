@@ -1,0 +1,12 @@
+<div class="todo" *ngIf="todo">
+  <label for="todo-{{ todo.id }}">
+    <input
+      id="todo-{{ todo.id }}"
+      name="todo-{{ todo.id }}"
+      type="checkbox"
+      [(ngModel)]="todo.completed"
+    />
+    {{ todo.name }}
+  </label>
+  <button (click)="deleteTodo(todo)">X</button>
+</div>

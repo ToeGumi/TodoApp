@@ -1,0 +1,30 @@
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+input {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: .8rem;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  color: #b83f457a;
+  background: none;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #b83f45;
+}
