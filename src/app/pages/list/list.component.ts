@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from 'src/app/todo.service';
 
-// Data
-import { TODOS } from 'src/app/mock-todos';
+// Interface
 import { Todo } from 'src/app/todo';
 
 @Component({
@@ -11,12 +11,16 @@ import { Todo } from 'src/app/todo';
 })
 export class ListComponent implements OnInit {
   
-  todos: Todo[] = TODOS;
-  
+  todos: Todo[] = [];
   checkCompleted: boolean = false;
 
-  constructor() { }
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  getTodos() {
+    this.todos = this.todoService.getTodos()
   }
 }

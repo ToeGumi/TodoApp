@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { TodoService } from 'src/app/todo.service';
 
-import { FormBuilder } from '@angular/forms';
+// Interface
+import { Todo } from 'src/app/todo';
 
 @Component({
   selector: 'app-create',
@@ -9,19 +12,33 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CreateComponent implements OnInit {
 
-  checkoutForm = this.formBuilder.group({
-    title: '',
-    completed: false
+  createForm = new FormGroup({
+    title: new FormControl('')
   });
 
   constructor(
-    private formBuilder: FormBuilder
+    private todoService: TodoService
   ) { }
 
   ngOnInit(): void {
   }
 
   createTodo(): void {
-    console.warn("your todo name is: ", this.checkoutForm.value);
+    let title: any = this.createForm.value.title?.trim();
+    let isDuplicate = this.todoService.getTodos().some((todo) => todo.title === title);
+    
+    if (title === "") {
+      console.log("Empty!");
+    } else if (isDuplicate) {
+      console.log("Duplicate!");
+    } else {
+      const todo: Todo = {
+        title: title,
+        completed: false
+      };
+      this.todoService.pushTodo(todo);
+      window.history.back()
+    }
+    
   }
 }
