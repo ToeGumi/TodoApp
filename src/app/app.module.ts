@@ -13,12 +13,13 @@ import { CheckedCompletePipe } from './pages/list/checked-complete.pipe';
 
 // Components
 import { AppComponent } from './app.component';
-import { ListComponent } from './pages/list/list.component';
 import { ButtonComponent } from './components/button/button.component';
 import { TextFieldComponent } from './components/text-field/text-field.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TodoComponent } from './components/todo/todo.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ListComponent } from './pages/list/list.component';
 import { CreateComponent } from './pages/create/create.component';
+import { UpdateComponent } from './pages/update/update.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CreateComponent } from './pages/create/create.component';
     DashboardComponent,
     TodoComponent,
     CheckedCompletePipe,
-    CreateComponent
+    CreateComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,
