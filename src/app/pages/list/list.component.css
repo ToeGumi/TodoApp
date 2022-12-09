@@ -22,3 +22,20 @@ div {
   display: flex;
   justify-content: space-between;
 }
+
+label:hover {
+  color: rgba(175, 47, 47, 0.5);
+}
+
+button {
+  border-radius: 1rem;
+  border: 1px solid rgba(175, 47, 47, 0.15);
+  background: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgba(175, 47, 47, 0.15);
+}

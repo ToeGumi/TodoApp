@@ -20,8 +20,12 @@ export class TodoComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateTodo(todo: Todo): void {
-    console.log("update")
+  checkTodo(todo: Todo): void {
+    console.log("check")
+  }
+
+  editTodo(todo: Todo): void {
+    console.log("edit")
   }
 
   deleteTodo(todo: Todo): void {

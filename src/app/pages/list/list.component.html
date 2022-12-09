@@ -4,7 +4,7 @@
     <app-todo [todo]="todo" (onSuggest)="getTodos()"></app-todo>
   </li>
 </ul>
-<div>
+<div *ngIf="nothingIsCheck">
   <label>
     <input type="checkbox" [(ngModel)]="completedIsChecked"/>
     Completed
