@@ -11,6 +11,8 @@ import { Todo } from 'src/app/todo';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
+  
+  todos: Todo[] = [];
 
   createForm = new FormGroup({
     title: new FormControl('')
@@ -21,11 +23,12 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.todos = this.todoService.getTodos();
   }
 
   createTodo(): void {
     let title: any = this.createForm.value.title?.trim();
-    let isDuplicate = this.todoService.getTodos().some((todo) => todo.title === title);
+    let isDuplicate = this.todos.some((todo) => todo.title === title);
     
     if (title === "") {
       console.log("Empty!");
@@ -36,8 +39,9 @@ export class CreateComponent implements OnInit {
         title: title,
         completed: false
       };
-      this.todoService.pushTodo(todo);
-      window.history.back()
+      this.todos.unshift(todo);
+      this.todoService.putTodos(this.todos);
+      this.createForm.reset();
     }
     
   }
