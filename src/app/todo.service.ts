@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Todo } from './todo';
-import { TODOS } from './mock-todos';
 
 
 @Injectable({
@@ -9,14 +8,16 @@ import { TODOS } from './mock-todos';
 })
 export class TodoService {
 
+  STORAGE_ID = 'todos';
+
   constructor() { }
 
   getTodos(): Todo[] {
-    return TODOS;
+    return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
   }
 
-  pushTodo(todo: Todo): void {
-    TODOS.unshift(todo);
+  putTodos(todos: Todo[]) {
+    localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
   }
   
 }
