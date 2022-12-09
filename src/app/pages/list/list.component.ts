@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TodoService } from 'src/app/todo.service';
 
 // Interface
@@ -10,9 +10,10 @@ import { Todo } from 'src/app/todo';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  
+
   todos: Todo[] = [];
-  checkCompleted: boolean = false;
+  nothingIsCheck: boolean = this.todos.some(todo => todo.completed);
+  completedIsChecked: boolean = false;
 
   constructor(private todoService: TodoService) { }
 
@@ -20,7 +21,12 @@ export class ListComponent implements OnInit {
     this.getTodos();
   }
 
-  getTodos() {
+  getTodos(): void {
     this.todos = this.todoService.getTodos()
+  }
+
+  clearAll(): void {
+    let filteredTodos = this.todos.filter(todo => todo.completed);
+    this.todoService.putTodos(filteredTodos);
   }
 }
