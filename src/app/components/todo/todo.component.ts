@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from '../../todo';
+import { TodoService } from 'src/app/todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -10,12 +11,23 @@ export class TodoComponent implements OnInit {
 
   @Input() todo?: Todo;
 
-  constructor() { }
+  @Output() onSuggest: EventEmitter<any> = new EventEmitter();
+
+  constructor(
+    private todoService: TodoService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  deleteTodo(todo: Todo):void {
+  updateTodo(todo: Todo): void {
+    console.log("update")
+  }
 
+  deleteTodo(todo: Todo): void {
+    let todos: Todo[] = this.todoService.getTodos();
+    todos = todos.filter(t => t.title != todo.title);
+    this.todoService.putTodos(todos);
+    this.onSuggest.emit();
   }
 }

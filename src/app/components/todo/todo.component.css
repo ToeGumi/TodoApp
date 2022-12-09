@@ -1,12 +1,12 @@
-.todo {
+div {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  text-align: start;
 }
 
 label {
-  display: flex;
-  align-items: center;
+  width: 100%;
+  display: inline-block;
   cursor: pointer;
 }
 
@@ -19,6 +19,7 @@ input {
 }
 
 button {
+  margin-left: auto;
   border: none;
   color: #b83f457a;
   background: none;

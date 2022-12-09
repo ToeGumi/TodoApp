@@ -1,9 +1,6 @@
-<div class="todo" *ngIf="todo">
-  <label>
-    <input
-      type="checkbox"
-      [(ngModel)]="todo.completed"
-    />
+<div *ngIf="todo">
+  <input type="checkbox" (change)="todo.completed = !todo.completed" [checked]="todo.completed" />
+  <label (dblclick)="updateTodo(todo)">
     {{ todo.title }}
   </label>
   <button (click)="deleteTodo(todo)">X</button>
