@@ -1,7 +1,9 @@
 <h2>Update</h2>
-<form>
+<form (ngSubmit)="updateTitle()">
   <input
-    type="text"
+    type="text" [(ngModel)]="todo.title"
+    name="title"
+
   />
   <button type="submit">Update</button>
 </form>

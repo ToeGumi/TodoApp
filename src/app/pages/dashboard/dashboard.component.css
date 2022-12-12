@@ -43,3 +43,9 @@ a {
 a:hover, a.active {
   background-color: #000;
 }
+
+a.disabled {
+  background-color: #85a7b9;
+  pointer-events: none;
+  cursor: default;
+}

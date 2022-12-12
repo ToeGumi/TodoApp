@@ -1,10 +1,10 @@
 <h2>List</h2>
 <ul *ngIf="todos">
-  <li *ngFor="let todo of todos | checkedComplete: completedIsChecked">
-    <app-todo [todo]="todo" (onSuggest)="getTodos()"></app-todo>
+  <li *ngFor="let todo of todos | checkedComplete: completedIsChecked" (click)="selectTodo(todo, todos.indexOf(todo))" [ngClass]="{'isSelected': selectedIndex == todos.indexOf(todo)}">
+    <app-todo *ngIf="todo" [todo]="todo" [todos]="todos" (callback)="getTodos()"></app-todo>
   </li>
 </ul>
-<div *ngIf="nothingIsCheck">
+<div *ngIf="!nothingIsCheck">
   <label>
     <input type="checkbox" [(ngModel)]="completedIsChecked"/>
     Completed
