@@ -1,0 +1,14 @@
+.container {
+  width: 600px;
+  min-height: 100vh;
+  margin: 3rem auto;
+  text-align: center;
+  font-family: Helvetica;
+}
+
+.app-name {
+  font-size: 100px;
+  font-weight: 100;
+  margin-bottom: 2rem;
+  color: rgba(175, 47, 47, 0.15);
+}

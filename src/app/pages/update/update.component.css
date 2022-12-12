@@ -1,0 +1,23 @@
+h2 {
+  color: #dadada;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+form {
+  text-align: right;
+}
+
+input {
+  width: 100%;
+  outline: none;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+button {
+  margin-right: 1rem;
+}

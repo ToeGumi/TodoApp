@@ -1,0 +1,13 @@
+<h2>List</h2>
+<ul *ngIf="todos">
+  <li *ngFor="let todo of todos | checkedComplete: completedIsChecked">
+    <app-todo [todo]="todo" (onSuggest)="getTodos()"></app-todo>
+  </li>
+</ul>
+<div *ngIf="nothingIsCheck">
+  <label>
+    <input type="checkbox" [(ngModel)]="completedIsChecked"/>
+    Completed
+  </label>
+  <button (click)="clearAll()" (disabled)="nothingIsCheck">Clear all</button>
+</div>
