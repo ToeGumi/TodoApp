@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Todo } from 'src/app/todo';
 
 import { TodoService } from 'src/app/todo.service';
@@ -16,6 +16,7 @@ export class UpdateComponent implements OnInit {
 
     constructor(
       private _activatedRoute: ActivatedRoute,
+      private _route: Router,
       private $todoService: TodoService
     ) { }
 
@@ -32,11 +33,13 @@ export class UpdateComponent implements OnInit {
   updateTitle() {
     if (this.todo.title !== "") {
       this.$todoService.putTodos(this.todos);
+      this._route.navigateByUrl('/');
     } else { // Delete todo if it's empty
       this.$todoService.putTodos(
         this.todos
           .filter(todo => todo.title !== "")
       );
+      this._route.navigateByUrl('/');
     }
   }
 }

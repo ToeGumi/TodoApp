@@ -8,7 +8,10 @@ import { Todo } from './todo';
 })
 export class SelectTodoService {
 
-  public todoTitle: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  public selectedTodo: BehaviorSubject<Todo> = new BehaviorSubject<Todo>({
+    title: '',
+    completed: false
+  });
 
   constructor() { }
 

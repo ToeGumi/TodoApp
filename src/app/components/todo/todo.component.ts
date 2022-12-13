@@ -41,6 +41,9 @@ export class TodoComponent implements OnInit {
     this.todos = this.todos.filter(t => t.title != this.todo.title);
     this.$todoService.putTodos(this.todos);
     this.callback.emit();
-    this.$selectTodoService.todoTitle.next("");
+    this.$selectTodoService.selectedTodo.next({
+      title: '',
+      completed: false
+    });
   }
 }
