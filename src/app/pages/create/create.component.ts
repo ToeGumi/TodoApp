@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
       title: new FormControl(this.todoTitle, [
         Validators.required,
         Validators.minLength(2),
-        Validators.pattern(/[a-zA-Z]*/),
+        Validators.pattern(/^[^-\s][a-zA-Z0-9_\s-]+$/),
         noDuplicated(this.todos)
       ])
     });

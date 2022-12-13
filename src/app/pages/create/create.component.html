@@ -8,9 +8,9 @@
     [(ngModel)]="todoTitle"
     placeholder="What needs to be done?"
     required
-    minlength="2"
+    minlength="1"
     maxlength="55"
-    pattern="[a-zA-Z]*"
+    pattern
   />
   <div
     *ngIf="title.invalid && (title.dirty || title.touched)"
@@ -18,13 +18,13 @@
   >
     <div *ngIf="title.errors?.['required']">Title is required.</div>
     <div *ngIf="title.errors?.['minlength']">
-      Title must be at least 2 characters long.
+      Title must be at least 1 characters long.
     </div>
     <div *ngIf="title.errors?.['pattern']">
-      Title must be words.
+      No number. No start with space.
     </div>
     <div *ngIf="title.errors?.['noDuplicated']">
-      Title is duplicated.
+      Title is unavailable.
     </div>
   </div>
   <button type="submit">Create</button>
