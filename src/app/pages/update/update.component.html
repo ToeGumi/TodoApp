@@ -1,8 +1,22 @@
 <h2>Update</h2>
-<form (ngSubmit)="updateTitle()">
+<form [formGroup]="updateForm" (ngSubmit)="updateTitle()">
   <input
-    type="text" [(ngModel)]="todo.title"
+    type="text"
+    id="title"
     name="title"
+    formControlName="title"
+    [(ngModel)]="todo.title"
+    required
+    maxlength="55"
+    pattern
   />
+  <div
+    *ngIf="title.invalid && (title.dirty || title.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="title.errors?.['required']">Title is required.</div>
+    <div *ngIf="title.errors?.['pattern']">No number. No start with space.</div>
+    <div *ngIf="title.errors?.['noDuplicated']">Title is unavailable.</div>
+  </div>
   <button type="submit">Update</button>
 </form>
