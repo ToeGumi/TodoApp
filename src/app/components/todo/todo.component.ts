@@ -4,7 +4,6 @@ import { Todo } from '../../todo';
 
 // Services
 import { TodoService } from 'src/app/todo.service';
-import { SelectTodoService } from 'src/app/select-todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -15,13 +14,13 @@ export class TodoComponent implements OnInit {
 
   @Input() todo!: Todo;
   @Input() todos!: Todo[];
+  @Input() somethingIsCompleted!:Function;
 
   @Output() callback: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _router: Router,
-    private $todoService: TodoService,
-    private $selectTodoService: SelectTodoService
+    private $todoService: TodoService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +29,7 @@ export class TodoComponent implements OnInit {
   updateCompleted() {
     this.todo.completed = !this.todo.completed;
     this.$todoService.putTodos(this.todos);
+    this.somethingIsCompleted();
   }
   
   updateTitle(): void {
@@ -41,9 +41,6 @@ export class TodoComponent implements OnInit {
     this.todos = this.todos.filter(t => t.title != this.todo.title);
     this.$todoService.putTodos(this.todos);
     this.callback.emit();
-    this.$selectTodoService.selectedTodo.next({
-      title: '',
-      completed: false
-    });
+    this.somethingIsCompleted();
   }
 }

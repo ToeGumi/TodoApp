@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Todo } from 'src/app/todo';
@@ -17,11 +17,13 @@ export class UpdateComponent implements OnInit {
     constructor(
       private _activatedRoute: ActivatedRoute,
       private _route: Router,
-      private $todoService: TodoService
+      private $todoService: TodoService,
+      private elementRef: ElementRef
     ) { }
 
   ngOnInit(): void {
     this.getTodo();
+    this.elementRef.nativeElement.querySelector('input').focus();
   }
 
   getTodo(): void {

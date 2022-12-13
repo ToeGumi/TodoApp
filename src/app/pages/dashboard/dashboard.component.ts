@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from 'src/app/todo';
-
-// Service
-import { SelectTodoService } from 'src/app/select-todo.service';
+import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,17 +8,17 @@ import { SelectTodoService } from 'src/app/select-todo.service';
 })
 export class DashboardComponent implements OnInit {
 
-  selectedTodo?: Todo;
-  todoTitle?: string;
+  isUpdate?: boolean;
 
-  constructor(private selectTodoService: SelectTodoService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.selectTodoService.selectedTodo.subscribe(value => {
-      this.selectedTodo = value;
-      this.todoTitle = value.title;
-    });
-  }
 
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        this.isUpdate = this.router.url.includes('/update');
+      }
+    })
+  }
 
 }

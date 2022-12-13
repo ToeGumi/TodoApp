@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 // Services
 import { TodoService } from 'src/app/todo.service';
-import { SelectTodoService } from 'src/app/select-todo.service';
 
 // Interface
 import { Todo } from 'src/app/todo';
@@ -16,7 +15,7 @@ export class ListComponent implements OnInit {
 
   todos: Todo[] = [];
   
-  nothingIsCheck?: boolean;
+  nothingIsComplete?: boolean;
   completedIsChecked: boolean = false;
 
   selectedTodo!: Todo;
@@ -25,17 +24,12 @@ export class ListComponent implements OnInit {
 
 
   constructor(
-    private todoService: TodoService,
-    private selectTodoService: SelectTodoService
+    private todoService: TodoService
   ) {}
 
   ngOnInit(): void {
     this.getTodos();
-    this.selectTodoService.selectedTodo.subscribe(todo => {
-      this.selectedTodo = todo;
-      this.selectedIndex = this.todos.findIndex(todo => todo.title == this.selectedTodo.title);
-    });
-    this.nothingIsCheck = this.todos.some(todo => !todo.completed); 
+    this.nothingIsComplete = !this.todos.some(todo => todo.completed);
   }
 
   getTodos(): void {
@@ -48,21 +42,7 @@ export class ListComponent implements OnInit {
     this.getTodos();
   }
 
-  selectTodo(todo: Todo, index: number) {
-    if (this.selectedTodo.title === "") {
-      this.selectTodoService.selectedTodo.next(todo);
-      this.isSelected = !this.isSelected;
-      this.selectedIndex = index;
-    } else if (index >= 0 && this.selectedIndex != index) {
-      this.selectTodoService.selectedTodo.next(todo);
-      this.isSelected = !this.isSelected;
-      this.selectedIndex = index;
-    } else {
-      this.selectTodoService.selectedTodo.next({
-        title: '',
-        completed: false
-      });
-      this.isSelected = !this.isSelected;
-    }
+  somethingIsCompleted = () => {
+    this.nothingIsComplete = !this.todos.some(todo => todo.completed);
   }
 }
