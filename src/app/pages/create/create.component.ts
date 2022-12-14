@@ -19,12 +19,13 @@ export class CreateComponent implements OnInit {
   createForm:any;
 
   constructor(
-    private todoService: TodoService,
+    private todoService$: TodoService,
     private elementRef: ElementRef,
   ) { }
 
   ngOnInit(): void {
-    this.todos = this.todoService.getTodos();
+    this.todoService$.getTodos().subscribe(todos => this.todos = todos);
+
     this.createForm = new FormGroup({
       title: new FormControl(this.todoTitle, [
         Validators.required,
@@ -33,20 +34,21 @@ export class CreateComponent implements OnInit {
         noDuplicated(this.todos)
       ])
     });
+
     this.elementRef.nativeElement.querySelector('input').focus();
   }
 
   get title() {return this.createForm.get('title')}
 
   createTodo(): void {
-    
     if (this.title.valid) {
       const todo: Todo = {
+        id: "",
         title: this.todoTitle.trim(),
         completed: false
       };
       this.todos.unshift(todo);
-      this.todoService.putTodos(this.todos);
+      this.todoService$.postTodos(this.todos);
       this.createForm.reset();
       this.elementRef.nativeElement.querySelector('input').focus();
     } else {

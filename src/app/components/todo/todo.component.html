@@ -1,7 +1,7 @@
 <div *ngIf="todo">
-  <input type="checkbox" (change)="updateCompleted()" [checked]="todo.completed" />
-  <label (dblclick)="updateTitle()">
+  <input type="checkbox" (change)="toggleCompletedTodo()" [checked]="todo.completed" />
+  <label (dblclick)="dblClickTitle()">
     {{ todo.title }}
   </label>
-  <button (click)="deleteTodo()">X</button>
+  <button (click)="rmvaTodo(todo)">X</button>
 </div>

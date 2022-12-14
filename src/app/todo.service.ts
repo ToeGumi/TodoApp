@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Todo } from './todo';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -8,16 +9,33 @@ import { Todo } from './todo';
 })
 export class TodoService {
 
-  STORAGE_ID = 'todos';
+  private todosUrl = 'https://6399709a29930e2bb3d2e0d4.mockapi.io/todos';
 
-  constructor() { }
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
-  getTodos(): Todo[] {
-    return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.todosUrl);
   }
 
-  putTodos(todos: Todo[]) {
-    localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
+  getTodo(id:string): Observable<Todo> {
+    return this.http.get<Todo>(this.todosUrl + `/${id}`);
   }
-  
+
+  postTodos(todos: Todo[]) {
+    return this.http.post<Todo[]>(this.todosUrl, todos, this.httpOptions);
+  }
+
+  putTodo(id: string, todo: Todo): Observable<Todo> {
+    return this.http.put<Todo>(this.todosUrl + `/${id}`, todo);
+  }
+
+  deleteTodo(id: string): Observable<Todo> {
+    return this.http.delete<Todo>(this.todosUrl + `/${id}`);
+  }
 }
