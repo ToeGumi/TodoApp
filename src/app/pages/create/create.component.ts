@@ -1,9 +1,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TodoService } from 'src/app/todo.service';
-
 // Interface
 import { Todo } from 'src/app/todo';
+// Validators
+import { noDuplicated } from 'src/app/validators/no-duplicated.validator';
 
 @Component({
   selector: 'app-create',
@@ -13,40 +14,43 @@ import { Todo } from 'src/app/todo';
 export class CreateComponent implements OnInit {
   
   todos: Todo[] = [];
+  todoTitle!: string;
 
-  createForm = new FormGroup({
-    title: new FormControl('')
-  });
+  createForm:any;
 
   constructor(
     private todoService: TodoService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
   ) { }
 
   ngOnInit(): void {
     this.todos = this.todoService.getTodos();
+    this.createForm = new FormGroup({
+      title: new FormControl(this.todoTitle, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern(/^[^-\s][a-zA-Z0-9_\s-]+$/),
+        noDuplicated(this.todos)
+      ])
+    });
     this.elementRef.nativeElement.querySelector('input').focus();
   }
 
+  get title() {return this.createForm.get('title')}
+
   createTodo(): void {
-    let title: any = this.createForm.value.title?.trim();
-    let isDuplicate = this.todos.some((todo) => todo.title === title);
     
-    if (title === "") {
-      console.log("Empty!");
-    } else if (isDuplicate) {
-      console.log("Duplicate!");
-    } else {
+    if (this.title.valid) {
       const todo: Todo = {
-        title: title,
+        title: this.todoTitle.trim(),
         completed: false
       };
       this.todos.unshift(todo);
       this.todoService.putTodos(this.todos);
       this.createForm.reset();
       this.elementRef.nativeElement.querySelector('input').focus();
+    } else {
+      console.log("Invalid!");
     }
   }
-
-
 }
