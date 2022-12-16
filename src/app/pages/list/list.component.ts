@@ -23,6 +23,32 @@ export class ListComponent implements OnInit {
   selectedIndex?: number;
   isSelected?: boolean;
 
+  listProps:object = {
+    toggleCompletedTodo: (todo: Todo) => {
+      todo.completed = !todo.completed;
+      this.todoService.putTodo(todo.id, todo).subscribe(res => {
+        console.log(res);
+      });
+    },
+
+    dblClickTitle: (todo: Todo) => {
+      this._router.navigate([`/update/${todo.id}`]);
+    },
+
+    rmTodo: (todo: Todo) => {
+      this.todoService.deleteTodo(todo.id).subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          this.getTodos();
+        }
+      )
+    }
+  }
 
   constructor(
     private _router: Router,
@@ -31,6 +57,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTodos();
+
     this.nothingIsComplete = !this.todos.some(todo => todo.completed);
   }
 
@@ -44,22 +71,11 @@ export class ListComponent implements OnInit {
 
   clearAll(): void {
     let filteredTodos = this.todos.filter(todo => !todo.completed);
-    this.todoService.postTodos(filteredTodos);
+    // this.todoService.postTodos(filteredTodos);
   }
 
   somethingIsCompleted = () => {
     this.nothingIsComplete = !this.todos.some(todo => todo.completed);
   }
 
-  toggleCompletedTodo = (): void => {
-
-  }
-
-  dblClickTitle = (): void => {
-
-  }
-
-  rmvaTodo = (todo:Todo): void => {
-
-  }
 }

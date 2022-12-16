@@ -3,9 +3,7 @@
   <li *ngFor="let todo of todos | checkedComplete : completedIsChecked">
     <app-todo
       [todo]="todo"
-      [toggleCompletedTodo]="toggleCompletedTodo"
-      [dblClickTitle]="dblClickTitle"
-      [rmvaTodo]="rmvaTodo"
+      [props]="listProps"
     ></app-todo>
   </li>
 </ul>
@@ -15,7 +13,7 @@
     <input type="checkbox" [(ngModel)]="completedIsChecked" />
     Completed
   </label>
-  <button (click)="clearAll()" (disabled)="(nothingIsComplete)">
+  <button (click)="clearAll()" [disabled]="(nothingIsComplete)">
     Clear all
   </button>
 </div>

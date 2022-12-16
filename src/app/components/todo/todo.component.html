@@ -1,7 +1,8 @@
 <div *ngIf="todo">
-  <input type="checkbox" (change)="toggleCompletedTodo()" [checked]="todo.completed" />
-  <label (dblclick)="dblClickTitle()">
+  <input type="checkbox"
+   (change)="props.toggleCompletedTodo(todo)" [checked]="todo.completed" />
+  <label (dblclick)="props.dblClickTitle(todo)">
     {{ todo.title }}
   </label>
-  <button (click)="rmvaTodo(todo)">X</button>
+  <button (click)="props.rmTodo(todo)">X</button>
 </div>
