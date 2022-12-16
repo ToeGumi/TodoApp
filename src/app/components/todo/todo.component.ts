@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Todo } from '../../todo';
+
+// Services
 import { TodoService } from 'src/app/todo.service';
 
 @Component({
@@ -9,29 +12,35 @@ import { TodoService } from 'src/app/todo.service';
 })
 export class TodoComponent implements OnInit {
 
-  @Input() todo?: Todo;
+  @Input() todo!: Todo;
+  @Input() todos!: Todo[];
+  @Input() somethingIsCompleted!:Function;
 
-  @Output() onSuggest: EventEmitter<any> = new EventEmitter();
+  @Output() callback: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private todoService: TodoService
+    private _router: Router,
+    private $todoService: TodoService
   ) { }
 
   ngOnInit(): void {
   }
 
-  checkTodo(todo: Todo): void {
-    console.log("check")
+  updateCompleted() {
+    this.todo.completed = !this.todo.completed;
+    this.$todoService.putTodos(this.todos);
+    this.somethingIsCompleted();
   }
-
-  editTodo(todo: Todo): void {
-    console.log("edit")
+  
+  updateTitle(): void {
+    let title = this.todo.title.split(" ").join("-");
+    this._router.navigateByUrl(`/update/${title}`)
   }
-
-  deleteTodo(todo: Todo): void {
-    let todos: Todo[] = this.todoService.getTodos();
-    todos = todos.filter(t => t.title != todo.title);
-    this.todoService.putTodos(todos);
-    this.onSuggest.emit();
+  
+  deleteTodo(): void {
+    this.todos = this.todos.filter(t => t.title != this.todo.title);
+    this.$todoService.putTodos(this.todos);
+    this.callback.emit();
+    this.somethingIsCompleted();
   }
 }

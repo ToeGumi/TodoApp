@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TodoService } from 'src/app/todo.service';
 
@@ -19,11 +19,13 @@ export class CreateComponent implements OnInit {
   });
 
   constructor(
-    private todoService: TodoService
+    private todoService: TodoService,
+    private elementRef: ElementRef
   ) { }
 
   ngOnInit(): void {
     this.todos = this.todoService.getTodos();
+    this.elementRef.nativeElement.querySelector('input').focus();
   }
 
   createTodo(): void {
@@ -42,7 +44,9 @@ export class CreateComponent implements OnInit {
       this.todos.unshift(todo);
       this.todoService.putTodos(this.todos);
       this.createForm.reset();
+      this.elementRef.nativeElement.querySelector('input').focus();
     }
-    
   }
+
+
 }
