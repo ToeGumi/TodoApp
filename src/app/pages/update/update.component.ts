@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Todo } from 'src/app/todo';
 import { TodoService } from 'src/app/todo.service';
-
 // Validators
 import { noDuplicated } from 'src/app/validators/no-duplicated.validator';
+
 @Component({
   selector: 'app-update',
   templateUrl: './update.component.html',
@@ -15,13 +15,13 @@ import { noDuplicated } from 'src/app/validators/no-duplicated.validator';
 export class UpdateComponent implements OnInit {
   todos!: Todo[];
   todo!: Todo;
-
+  id!: string;
   updateForm: any;
 
     constructor(
       private _activatedRoute: ActivatedRoute,
       private _route: Router,
-      private $todoService: TodoService,
+      private todoService$: TodoService,
       private elementRef: ElementRef
     ) { }
 
@@ -34,19 +34,20 @@ export class UpdateComponent implements OnInit {
         noDuplicated(this.todos.filter(todo => todo != this.todo))
       ])
     });
+    
+    this.id = this._activatedRoute.snapshot.paramMap.get("id")!; // ! non-null assertion
   }
 
   get title() { return this.updateForm.get('title') }
 
   getTodo(): void {
-    let title = this._activatedRoute.snapshot.paramMap.get("title")!.split("-").join(" ");
-    this.todos = this.$todoService.getTodos();
-    this.todo = this.todos.find(todo => todo.title === title)!;
+    
+    this.todoService$.getTodo(this.id).subscribe(todo => this.todo = todo);
   }
 
   updateTitle() {
     if (this.title.valid) {
-      this.$todoService.putTodos(this.todos);
+      this.todoService$.putTodo(this.id, this.todo);
       this._route.navigateByUrl('/');
     } else {
       console.log("Invalid!");

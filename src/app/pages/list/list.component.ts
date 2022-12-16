@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Services
 import { TodoService } from 'src/app/todo.service';
@@ -14,7 +15,7 @@ import { Todo } from 'src/app/todo';
 export class ListComponent implements OnInit {
 
   todos: Todo[] = [];
-  
+
   nothingIsComplete?: boolean;
   completedIsChecked: boolean = false;
 
@@ -24,8 +25,9 @@ export class ListComponent implements OnInit {
 
 
   constructor(
+    private _router: Router,
     private todoService: TodoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getTodos();
@@ -33,16 +35,31 @@ export class ListComponent implements OnInit {
   }
 
   getTodos(): void {
-    this.todos = this.todoService.getTodos()
+    this.todoService.getTodos().subscribe(todos => this.todos = todos);
+  }
+
+  updateTitle(todo: Todo): void {
+    this._router.navigateByUrl(`/update/${todo.id}`)
   }
 
   clearAll(): void {
     let filteredTodos = this.todos.filter(todo => !todo.completed);
-    this.todoService.putTodos(filteredTodos);
-    this.getTodos();
+    this.todoService.postTodos(filteredTodos);
   }
 
   somethingIsCompleted = () => {
     this.nothingIsComplete = !this.todos.some(todo => todo.completed);
+  }
+
+  toggleCompletedTodo = (): void => {
+
+  }
+
+  dblClickTitle = (): void => {
+
+  }
+
+  rmvaTodo = (todo:Todo): void => {
+
   }
 }
