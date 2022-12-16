@@ -43,12 +43,13 @@ export class CreateComponent implements OnInit {
   createTodo(): void {
     if (this.title.valid) {
       const todo: Todo = {
-        id: "",
+        id: '',
         title: this.todoTitle.trim(),
         completed: false
       };
-      this.todos.unshift(todo);
-      this.todoService$.postTodos(this.todos);
+      this.todoService$.postTodo(todo).subscribe(res => {
+        console.log(res);
+      });
       this.createForm.reset();
       this.elementRef.nativeElement.querySelector('input').focus();
     } else {

@@ -10,7 +10,7 @@
     required
     minlength="1"
     maxlength="55"
-    pattern
+    pattern="/^[^-\s][a-zA-Z0-9_\s-]+$/"
   />
   <div
     *ngIf="title.invalid && (title.dirty || title.touched)"
