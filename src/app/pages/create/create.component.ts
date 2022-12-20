@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TodoService } from 'src/app/todo.service';
+import { TodoService } from 'src/app/services/todo.service';
 // Interface
 import { Todo } from 'src/app/todo';
 // Validators
@@ -12,11 +12,11 @@ import { noDuplicated } from 'src/app/validators/no-duplicated.validator';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  
+
   todos: Todo[] = [];
   todoTitle!: string;
-
   createForm:any;
+  successMessage:string = "";
 
   constructor(
     private todoService$: TodoService,
@@ -29,8 +29,7 @@ export class CreateComponent implements OnInit {
     this.createForm = new FormGroup({
       title: new FormControl(this.todoTitle, [
         Validators.required,
-        Validators.minLength(2),
-        Validators.pattern(/^[^-\s][a-zA-Z_\s-]+$/),
+        Validators.pattern(/^[^-\d\s].*/),
         noDuplicated(this.todos)
       ])
     });
@@ -48,7 +47,8 @@ export class CreateComponent implements OnInit {
         completed: false
       };
       this.todoService$.postTodo(todo).subscribe(res => {
-        console.log(res);
+        this.successMessage = `${res.title} create successfully!`;
+        setTimeout(() => this.successMessage = "", 4000);
       });
       this.createForm.reset();
       this.elementRef.nativeElement.querySelector('input').focus();

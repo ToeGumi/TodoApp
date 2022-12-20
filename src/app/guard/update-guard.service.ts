@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateGuardServiceService implements CanActivate {
+export class UpdateGuardService implements CanActivate {
 
   private id = new BehaviorSubject('');
   currentId = this.id.asObservable();
@@ -14,7 +14,7 @@ export class UpdateGuardServiceService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     let id = route.params['id?'];
-    
+
     if (id) {
       this.updateId(id);
       return true;

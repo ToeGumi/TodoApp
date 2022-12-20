@@ -43,9 +43,18 @@ button:hover {
   float: left;
 }
 
-.alert div {
+.alert-danger {
   background-color: #fed3d3;
   color: #820000;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  width: 100%;
+  text-align: left;
+  color: #fff;
+  background-color: #4BB543;
   padding: 1rem;
   margin-bottom: 1rem;
 }

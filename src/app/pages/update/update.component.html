@@ -8,14 +8,14 @@
     [(ngModel)]="todo.title"
     required
     maxlength="55"
-    pattern
+    pattern="^[^-\d\s].*"
   />
   <div
     *ngIf="title.invalid && (title.dirty || title.touched)"
     class="alert alert-danger"
   >
     <div *ngIf="title.errors?.['required']">Title is required.</div>
-    <div *ngIf="title.errors?.['pattern']">No number. No start with space.</div>
+    <div *ngIf="title.errors?.['pattern']">No start with number, hyphen or space.</div>
     <div *ngIf="title.errors?.['noDuplicated']">Title is unavailable.</div>
   </div>
   <button type="submit">Update</button>

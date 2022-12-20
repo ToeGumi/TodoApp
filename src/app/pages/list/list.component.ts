@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 
 // Services
 import {TodoService} from 'src/app/services/todo.service';
+import {UpdateService} from "../../services/update.service";
 
 // Interface
 import {Todo} from 'src/app/todo';
@@ -19,11 +20,26 @@ export class ListComponent implements OnInit {
   loading: boolean = true;
   somethingIsCompleted: boolean = false;
   completedIsChecked: boolean = false;
-  messages: string[] = [];
+  successMessage: string = "";
+
+  constructor(
+    private _router: Router,
+    private todoService$: TodoService,
+    private updateService$: UpdateService
+  ) {}
+
+  ngOnInit(): void {
+    this.getTodos();
+
+    this.updateService$.currentSuccessMessage.subscribe(msg =>
+      this.successMessage = msg
+    )
+  }
+
   listProps: object = {
     toggleCompletedTodo: (todo: Todo) => {
       todo.completed = !todo.completed;
-      this.todoService.putTodo(todo.id, todo).subscribe(res => {
+      this.todoService$.putTodo(todo.id, todo).subscribe(res => {
         console.log(res);
       });
 
@@ -49,29 +65,25 @@ export class ListComponent implements OnInit {
     dblClickTitle: (todo: Todo) => {
       this._router
         .navigate([`/update/${todo.id}`])
-        .then();
+        .then(()=> {
+          this.updateService$.updateTodos(this.todos);
+        });
     },
 
     rmTodo: (todo: Todo) => {
-      this.todoService.deleteTodo(todo.id).subscribe({
+      this.todoService$.deleteTodo(todo.id).subscribe({
         next: (v) => console.log(v),
         error: (e) => console.log(e)
       })
       this.cpTodos = this.cpTodos.filter(tod => tod.id !== todo.id);
+      this.updateService$.updateTodos(this.cpTodos);
     }
   }
 
-  constructor(
-    private _router: Router,
-    private todoService: TodoService
-  ) {}
 
-  ngOnInit(): void {
-    this.getTodos();
-  }
 
   getTodos(): void {
-    this.todoService
+    this.todoService$
       .getTodos()
       .subscribe({
         next: todos => {
@@ -88,19 +100,20 @@ export class ListComponent implements OnInit {
   updateTitle(todo: Todo): void {
     this._router
       .navigateByUrl(`/update/${todo.id}`)
-      .then(() => this.messages.push("title updated"))
+      .then();
   }
 
   clearAll(): void {
     this.todos
       .filter(todo => todo.completed)
-      .forEach(todo => this.todoService.deleteTodo(todo.id).subscribe({
+      .forEach(todo => this.todoService$.deleteTodo(todo.id).subscribe({
         next: value => console.log(value),
         error: err => console.log(err)
       }));
 
     this.todos = this.todos.filter(todo => !todo.completed);
     this.cpTodos = this.todos;
+    this.updateService$.updateTodos(this.cpTodos);
     if (this.completedIsChecked) {
       this.completedIsChecked = false;
       this.somethingIsCompleted = false;
