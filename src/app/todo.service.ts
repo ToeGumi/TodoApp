@@ -36,6 +36,7 @@ export class TodoService {
   }
 
   deleteTodo(id: string): Observable<Todo> {
+    console.log("delete")
     return this.http.delete<Todo>(this.todosUrl + `/${id}`);
   }
 }
