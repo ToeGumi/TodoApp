@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 //Pipes
-import { CheckedCompletePipe } from './pages/list/checked-complete.pipe';
+import { CheckedCompletePipe } from './pipes/checked-complete.pipe';
 
 // Components
 import { AppComponent } from './app.component';

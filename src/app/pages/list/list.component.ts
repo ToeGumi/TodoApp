@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 // Services
-import {TodoService} from 'src/app/todo.service';
+import {TodoService} from 'src/app/services/todo.service';
 
 // Interface
 import {Todo} from 'src/app/todo';
