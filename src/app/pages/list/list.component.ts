@@ -23,7 +23,6 @@ export class ListComponent implements OnInit {
   listProps: object = {
     toggleCompletedTodo: (todo: Todo) => {
       todo.completed = !todo.completed;
-
       this.todoService.putTodo(todo.id, todo).subscribe(res => {
         console.log(res);
       });
@@ -56,17 +55,16 @@ export class ListComponent implements OnInit {
     rmTodo: (todo: Todo) => {
       this.todoService.deleteTodo(todo.id).subscribe({
         next: (v) => console.log(v),
-        error: (e) => console.log(e),
-        complete: () => this.getTodos
+        error: (e) => console.log(e)
       })
+      this.cpTodos = this.cpTodos.filter(tod => tod.id !== todo.id);
     }
   }
 
   constructor(
     private _router: Router,
     private todoService: TodoService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getTodos();
@@ -85,7 +83,6 @@ export class ListComponent implements OnInit {
           this.somethingIsCompleted = this.todos.some(todo => todo.completed);
         }
       });
-
   }
 
   updateTitle(todo: Todo): void {
