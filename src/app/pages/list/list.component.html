@@ -1,21 +1,20 @@
-<h2>List</h2>
+<h2>List <span *ngIf="successMessage">{{successMessage}}</span></h2>
+<div *ngIf="loading">Loading...</div>
 <ul *ngIf="todos">
-  <li *ngFor="let todo of todos | checkedComplete : completedIsChecked">
+  <li *ngFor="let todo of cpTodos | checkedComplete : completedIsChecked">
     <app-todo
       [todo]="todo"
-      [toggleCompletedTodo]="toggleCompletedTodo"
-      [dblClickTitle]="dblClickTitle"
-      [rmvaTodo]="rmvaTodo"
+      [props]="listProps"
     ></app-todo>
   </li>
 </ul>
 <small *ngIf="todos.length !== 0">Double click the title to update</small>
-<div *ngIf="!nothingIsComplete">
+<div *ngIf="somethingIsCompleted">
   <label>
-    <input type="checkbox" [(ngModel)]="completedIsChecked" />
+    <input type="checkbox" [(ngModel)]="completedIsChecked" (click)="showCompletedTodos()"/>
     Completed
   </label>
-  <button (click)="clearAll()" (disabled)="(nothingIsComplete)">
+  <button (click)="clearAll()" [disabled]="!somethingIsCompleted">
     Clear all
   </button>
 </div>

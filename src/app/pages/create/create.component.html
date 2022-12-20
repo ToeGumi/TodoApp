@@ -8,24 +8,25 @@
     [(ngModel)]="todoTitle"
     placeholder="What needs to be done?"
     required
-    minlength="1"
     maxlength="55"
-    pattern
+    pattern="^[^-\d\s].*"
   />
   <div
     *ngIf="title.invalid && (title.dirty || title.touched)"
     class="alert alert-danger"
   >
     <div *ngIf="title.errors?.['required']">Title is required.</div>
-    <div *ngIf="title.errors?.['minlength']">
-      Title must be at least 1 characters long.
-    </div>
     <div *ngIf="title.errors?.['pattern']">
-      No number. No start with space.
+      No start with number, hyphen or space.
     </div>
     <div *ngIf="title.errors?.['noDuplicated']">
       Title is unavailable.
     </div>
+  </div>
+  <div *ngIf="successMessage"
+       class="alert alert-success"
+  >
+    {{ successMessage }}
   </div>
   <button type="submit">Create</button>
 </form>

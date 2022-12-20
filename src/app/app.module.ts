@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 // Forms
 import { FormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 //Pipes
-import { CheckedCompletePipe } from './pages/list/checked-complete.pipe';
+import { CheckedCompletePipe } from './pipes/checked-complete.pipe';
 
 // Components
 import { AppComponent } from './app.component';
@@ -33,7 +34,8 @@ import { UpdateComponent } from './pages/update/update.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
