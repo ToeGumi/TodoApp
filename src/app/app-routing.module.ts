@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './pages/list/list.component';
 import { CreateComponent } from './pages/create/create.component';
 import { UpdateComponent } from './pages/update/update.component';
-import { UpdateGuardServiceService } from './pages/dashboard/update-guard.service';
+import { UpdateGuardServiceService } from './guard/update-guard.service';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [

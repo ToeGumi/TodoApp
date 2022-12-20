@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UpdateGuardServiceService } from './update-guard.service';
+import { UpdateGuardServiceService } from '../../guard/update-guard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +8,7 @@ import { UpdateGuardServiceService } from './update-guard.service';
 })
 export class DashboardComponent implements OnInit{
   id: string = '';
-  
+
   constructor(
     private updateService: UpdateGuardServiceService
   ) {}
